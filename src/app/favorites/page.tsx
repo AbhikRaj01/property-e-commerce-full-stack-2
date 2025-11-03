@@ -15,7 +15,12 @@ export default function FavoritesPage() {
   const [favoriteProperties, setFavoriteProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   
-  const { cart, favorites, toggleFavorite } = useCartStore();
+  const { cart, favorites, toggleFavorite, syncFromDatabase } = useCartStore();
+
+  // Sync data from database on mount
+  useEffect(() => {
+    syncFromDatabase();
+  }, [syncFromDatabase]);
 
   useEffect(() => {
     const fetchFavoriteProperties = async () => {

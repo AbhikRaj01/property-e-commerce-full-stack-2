@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCartStore } from '@/lib/cart-store';
 import Navbar from '@/components/Navbar';
@@ -10,7 +11,12 @@ import { Trash2, ShoppingCart, ArrowRight, MapPin } from 'lucide-react';
 
 export default function CartPage() {
   const router = useRouter();
-  const { cart, favorites, removeFromCart } = useCartStore();
+  const { cart, favorites, removeFromCart, syncFromDatabase } = useCartStore();
+
+  // Sync data from database on mount
+  useEffect(() => {
+    syncFromDatabase();
+  }, [syncFromDatabase]);
 
   const totalValue = cart.reduce((sum, property) => sum + property.price, 0);
 

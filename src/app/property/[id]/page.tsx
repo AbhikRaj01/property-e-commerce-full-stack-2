@@ -31,7 +31,12 @@ export default function PropertyDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const { cart, favorites, toggleFavorite, addToCart, isInCart, isFavorite } = useCartStore();
+  const { cart, favorites, toggleFavorite, addToCart, isInCart, isFavorite, syncFromDatabase } = useCartStore();
+
+  // Sync data from database on mount
+  useEffect(() => {
+    syncFromDatabase();
+  }, [syncFromDatabase]);
 
   useEffect(() => {
     const fetchProperty = async () => {
@@ -96,6 +101,10 @@ export default function PropertyDetailPage() {
 
   const inCart = isInCart(property.id);
   const favorited = isFavorite(property.id);
+
+  const handleAddToCart = async () => {
+    await addToCart(property);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -205,7 +214,7 @@ export default function PropertyDetailPage() {
                 <Button
                   className="w-full"
                   size="lg"
-                  onClick={() => addToCart(property)}
+                  onClick={handleAddToCart}
                   disabled={inCart || property.status !== 'available'}
                 >
                   {inCart ? (

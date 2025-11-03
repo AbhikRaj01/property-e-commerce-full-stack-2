@@ -14,7 +14,12 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
-  const { cart, favorites, toggleFavorite } = useCartStore();
+  const { cart, favorites, toggleFavorite, syncFromDatabase } = useCartStore();
+
+  // Sync data from database on mount
+  useEffect(() => {
+    syncFromDatabase();
+  }, [syncFromDatabase]);
 
   const fetchProperties = async (filters?: Record<string, string>) => {
     setLoading(true);
