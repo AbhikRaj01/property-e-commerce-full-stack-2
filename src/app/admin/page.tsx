@@ -553,8 +553,7 @@ export default function AdminPage() {
 
         <div className="mt-6 p-4 bg-secondary/20 rounded-lg">
           <p className="text-sm text-muted-foreground">
-            <strong>Note:</strong> All changes are stored in memory and will be reset when the server restarts. 
-            For production use, connect this to a proper database.
+            
           </p>
         </div>
       </div>
